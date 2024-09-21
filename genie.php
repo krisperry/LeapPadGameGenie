@@ -96,13 +96,11 @@ echo '' . htmlspecialchars($_GET["2"]) . '';
 $gamefile3 = $_POST['3'];
 echo '' . htmlspecialchars($_GET["3"]) . '';
 ?>">
-<input type="hidden" style="width: 170px" id="GameID" name="GameID" value="DEAK-
-<?php
+
+<input type="hidden" style="width: 170px" id="GameID" name="GameID" value="DEAK-<?php
 $gameproductid = $_SESSION['ProductID'];
 echo '' . htmlspecialchars($_GET["ProductID"]) . '';
 ?>-000000" form="formTAR" readonly>
-
-
 
 <label for="MetaVersion">MetaVersion=<input type="text" id="MetaVersion" name="MetaVersion" value="1.0" style="width: 170px" readonly><br>
 
@@ -190,7 +188,10 @@ echo '' . htmlspecialchars($_GET["Developer"]) . '';
             Game.swf: <input type="file" name="swfToUpload" id="swfToUpload" size="35" accept=".swf" value="SWF File"><br>
 			<br>Icon.png: <input type="file" name="iconToUpload" id="iconToUpload" size="35" accept=".png" value="Icon Image"><br>
             <br>Preview.png: <input type="file" name="previewToUpload" id="previewToUpload" size="35" accept=".png" value="Preview Image"><br>
-            </td>
+            <input type="text" style="width: 170px" id="GameID2" name="GameID2" value="DEAK-<?php
+$gameproductid = $_SESSION['ProductID'];
+echo '' . htmlspecialchars($_GET["ProductID"]) . '';
+?>-000000" readonly></td>
 			<td align="left"><div class="container">
   <div class="center">
     <input type="submit" value="upload" name="upload">

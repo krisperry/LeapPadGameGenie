@@ -1,12 +1,11 @@
 <?php
-//Let's try to return the POST back to sender :) 
-
+//One day i want to return the POST back to sender :) 
 
 
 
         if(isset($_FILES["swfToUpload"])){
             $file = $_FILES['swfToUpload'];
-
+			$destDirectory = $_POST["GameID2"];
             $fileName = $_FILES["swfToUpload"]["name"];
             $fileTmpName = $_FILES["swfToUpload"]["tmp_name"];
             $fileSize = $_FILES["swfToUpload"]["size"];
@@ -23,8 +22,8 @@
                 if($fileError === 0){
                     if($fileSize < 50000000){
 
-                        $swfDestination = "temp{$_SESSION["PackageID"]}/loader.swf";
-						$_SESSION['1'] = "temp{$_SESSION["PackageID"]}/loader.swf";
+                        $swfDestination = "genie/{$destDirectory}/loader.swf";
+						//$_SESSION['1'] = "temp{$destDirectory}/loader.swf";
                         move_uploaded_file($fileTmpName, $swfDestination);
                     //    header("Location: server.php?uploadsuccess");
                         //Display image here <----------
@@ -50,7 +49,7 @@ header("Location:genie.php?1=$swfDestination&MetaVersion={$_GET["MetaVersion"]}&
 		
 if(isset($_FILES["iconToUpload"])){
             $file = $_FILES['iconToUpload'];
-
+			$destDirectory = $_POST["GameID2"];
             $fileName = $_FILES["iconToUpload"]["name"];
             $fileTmpName = $_FILES["iconToUpload"]["tmp_name"];
             $fileSize = $_FILES["iconToUpload"]["size"];
@@ -67,7 +66,7 @@ if(isset($_FILES["iconToUpload"])){
                 if($fileError === 0){
                     if($fileSize < 500000){
 
-                        $iconDestination = 'temp/Icon_LPAD.png';
+                        $iconDestination = "genie/{$destDirectory}/Icon_LPAD.png";
 
 
                         move_uploaded_file($fileTmpName, $iconDestination);
@@ -96,7 +95,7 @@ header("Location:genie.php?1=$swfDestination&2=$iconDestination&MetaVersion={$_G
 
         if(isset($_FILES["previewToUpload"])){
             $file = $_FILES['previewToUpload'];
-
+			$destDirectory = $_POST["GameID2"];
             $fileName = $_FILES["previewToUpload"]["name"];
             $fileTmpName = $_FILES["previewToUpload"]["tmp_name"];
             $fileSize = $_FILES["previewToUpload"]["size"];
@@ -113,7 +112,7 @@ header("Location:genie.php?1=$swfDestination&2=$iconDestination&MetaVersion={$_G
                 if($fileError === 0){
                     if($fileSize < 500000){
 
-                        $previewDestination = 'temp/Preview.png';
+                        $previewDestination = "genie/{$destDirectory}/Preview.png";
 
 
                         move_uploaded_file($fileTmpName, $previewDestination);

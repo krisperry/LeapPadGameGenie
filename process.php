@@ -5,6 +5,7 @@ session_start();
 
 //Lets split the operations by origin form
 //You can do an else, but I prefer a separate statement
+
 if($_GET["preview"]=="preview") {
   /////////////
   //User hit the Update/ Preview meta.inf &gameinfo.json button, handle accordingly
@@ -73,11 +74,16 @@ fclose($fh);
 }
 //end save meta.inf
 
-//Go Back
-header("Location:genie.php?1=$swfDestination&2=$iconDestination&3=$previewDestination&MetaVersion={$_GET["MetaVersion"]}&Device={$_GET["Device"]}&Type={$_GET["Type"]}&ProductID={$_GET["ProductID"]}&PackageID={$PackageID}&Version={$_GET["Version"]}&Locale={$_GET["Locale"]}&Name={$_GET["Name"]}&Publisher={$_GET["Publisher"]}&Developer={$_GET["Developer"]}&Hidden={$_GET["Hidden"]}&Icon={$_GET["Icon"]}&AppSo={$_GET["AppSo"]}&DeviceAccess={$_GET["DeviceAccess"]}&Category={$_GET["Category"]}&PreviewImage={$_GET["PreviewImage"]}&Depends={$_GET["Depends"]}&ViewFrame={$_GET["ViewFrame"]}");
-//(WORKING, but would like to form $....DestinationsFrom GET['1']['2']['3'] 
+//Go Back(WORKING)
+header("Location:genie.php?1={$_GET["1"]}&2={$_GET["2"]}&3={$_GET["3"]}&MetaVersion={$_GET["MetaVersion"]}&Device={$_GET["Device"]}&Type={$_GET["Type"]}&ProductID={$_GET["ProductID"]}&PackageID={$PackageID}&Version={$_GET["Version"]}&Locale={$_GET["Locale"]}&Name={$_GET["Name"]}&Publisher={$_GET["Publisher"]}&Developer={$_GET["Developer"]}&Hidden={$_GET["Hidden"]}&Icon={$_GET["Icon"]}&AppSo={$_GET["AppSo"]}&DeviceAccess={$_GET["DeviceAccess"]}&Category={$_GET["Category"]}&PreviewImage={$_GET["PreviewImage"]}&Depends={$_GET["Depends"]}&ViewFrame={$_GET["ViewFrame"]}");
+
   
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///############################################################################################################################################
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
@@ -86,11 +92,10 @@ if($_GET["upload"]=="upload") {
   //User hit the upload button, handle accordingly
   //////////
   
-  $ProductID = $_POST['ProductID'];
-  $PackageID = "DEAK-". htmlspecialchars($_GET["ProductID"]) ."-000000";
-  //$_SESSION["Directory"] = $PackageID;
-  //$_SESSION["ProductID"] = htmlspecialchars($_GET["ProductID"]);
-
+  //ProductID
+  $PackageID = $_POST['Directory'];
+ // $_SESSION["Directory"] = $PackageID;
+ 
   echo 'Uploading SWF to: '. $PackageID . ' failed.';
   
         if(isset($_FILES["swfToUpload"])){
@@ -241,18 +246,18 @@ if($_GET["generate"]=="generate") {
 //22 Characters, ABC3-0xAB89EF12-123456
 //$regex_pattern = '^(([A-Z0-9]{4})-0x([A-F0-9]{8})-([0-9]{6}))$/A';
 $GameID = $_POST['GameID'];	
+
 //	if (preg_match($regex_pattern, $GameID)) {
 
 try {
 	// assume GameID was posted from form
-
-
+ 
 //name the output tar file
 $phar = new PharData('genie/'. htmlspecialchars($_GET["GameID"]) . '.tar');
-// add all the files from the TEMP directory
-//Does work but makes a POSIX tar, we need it to be GNU
+// add all the files from the working directory
+//Does work but a little bit's broken since i've stopped using /temp/
 $phar->buildFromDirectory(dirname(__FILE__) . '/genie/'.htmlspecialchars($_SESSION["Directory"]));
-
+echo '<a href="https://genie.epizy.com/genie/'.htmlspecialchars($_SESSION["Directory"]);
 //produces File.tar.gz doesn't work with LPM
 //$phar->compress(Phar::COMPRESSED);
 
@@ -269,11 +274,11 @@ $phar->buildFromDirectory(dirname(__FILE__) . '/genie/'.htmlspecialchars($_SESSI
 //$zip->close();
 
 
-    echo '' . htmlspecialchars($_GET["GameID"]) . ' Is Ready To Download!</h1>
+    echo '">Your Game: ' . htmlspecialchars($_GET["GameID"]) . '.tar Is Ready To Download!</a></h1>
 	<br>
 	<div class="content" id="download">
 	<a href="genie/' . htmlspecialchars($_GET["GameID"]) . '.tar"><img src="https://genie.epizy.com/images/tar.png" alt="'. htmlspecialchars($_GET["GameID"]) . '.tar"></a>
-    Download!</div>';
+ </div>';
 } 
 catch (Exception $e) {
     // handle errors here
